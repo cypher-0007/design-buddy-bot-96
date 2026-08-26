@@ -1,31 +1,42 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 import {
   BadgeCheck,
-  Bath,
   BedDouble,
   Building2,
   CalendarCheck,
   ChevronDown,
   Flag,
-  MapPin,
   MessageCircle,
   Search,
-  ShieldAlert,
   Users,
-  Wifi,
   Zap,
 } from "lucide-react";
 
 import heroImage from "@/assets/hero-lodge.jpg";
-import selfconImage from "@/assets/listing-selfcon.jpg";
-import bedspaceImage from "@/assets/listing-bedspace.jpg";
-import apartmentImage from "@/assets/listing-apartment.jpg";
-import lodgeImage from "@/assets/listing-lodge.jpg";
+import { ListingCard } from "@/components/listing-card";
+import { SiteFooter } from "@/components/site-footer";
+import { SiteHeader } from "@/components/site-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { listings } from "@/lib/listings";
 
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "LodgeMate — Student Housing Near MOUAU & ABSU" },
+      {
+        name: "description",
+        content:
+          "Find verified lodges, bedspaces and tenancy takeovers near MOUAU and ABSU. Compare prices, book inspections, rent safely.",
+      },
+      { property: "og:title", content: "LodgeMate — Student Housing Near MOUAU & ABSU" },
+      {
+        property: "og:description",
+        content: "Verified student lodges, bedspaces and takeovers in one searchable marketplace.",
+      },
+    ],
+  }),
   component: Index,
 });
 
@@ -34,49 +45,6 @@ const filters = [
   { label: "Area", value: "Ishiagu / Umudike" },
   { label: "Room type", value: "Self-contained" },
   { label: "Price", value: "₦150k – ₦300k" },
-];
-
-const listings = [
-  {
-    title: "PalmView Self-Con, Ishiagu Gate",
-    kind: "Full lodge",
-    school: "MOUAU · 6 min walk",
-    price: "₦280,000",
-    period: "per year",
-    image: selfconImage,
-    verified: true,
-    amenities: ["Prepaid meter", "Borehole", "Tiled"],
-  },
-  {
-    title: "Bedspace in 2-man room, Zik's Flat",
-    kind: "Bedspace",
-    school: "ABSU · 10 min bike",
-    price: "₦95,000",
-    period: "per session",
-    image: bedspaceImage,
-    verified: true,
-    amenities: ["Female only", "Fenced", "Study desk"],
-  },
-  {
-    title: "Takeover: 1-bedroom, 7 months left",
-    kind: "Takeover",
-    school: "MOUAU · Umudike",
-    price: "₦185,000",
-    period: "remaining tenancy",
-    image: apartmentImage,
-    verified: false,
-    amenities: ["Kitchen", "Water heater", "Parking"],
-  },
-  {
-    title: "Green Court Lodge — 4 rooms left",
-    kind: "Full lodge",
-    school: "ABSU · Uturu main road",
-    price: "₦210,000",
-    period: "per year",
-    image: lodgeImage,
-    verified: true,
-    amenities: ["Gated", "Security", "Solar backup"],
-  },
 ];
 
 const trustPoints = [
@@ -118,33 +86,7 @@ const listingTypes = [
 function Index() {
   return (
     <div className="min-h-screen bg-background">
-      <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
-          <a href="/" className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-canopy text-primary-foreground">
-              <MapPin className="h-4 w-4" />
-            </span>
-            <span className="font-display text-lg font-bold tracking-tight">LodgeMate</span>
-          </a>
-          <nav className="hidden items-center gap-7 text-sm text-muted-foreground md:flex">
-            <a className="transition-colors hover:text-foreground" href="#browse">
-              Browse
-            </a>
-            <a className="transition-colors hover:text-foreground" href="#types">
-              Bedspaces
-            </a>
-            <a className="transition-colors hover:text-foreground" href="#trust">
-              How we verify
-            </a>
-          </nav>
-          <div className="flex items-center gap-2">
-            <Button variant="ghost" size="sm">
-              Sign in
-            </Button>
-            <Button size="sm">List a space</Button>
-          </div>
-        </div>
-      </header>
+      <SiteHeader />
 
       <main>
         {/* Hero */}
@@ -190,8 +132,8 @@ function Index() {
                     </button>
                   ))}
                 </div>
-                <Button size="lg" className="md:px-7">
-                  Search
+                <Button size="lg" className="md:px-7" asChild>
+                  <Link to="/browse">Search</Link>
                 </Button>
               </div>
               <div className="mt-3 flex flex-wrap gap-2 px-1">
@@ -235,65 +177,14 @@ function Index() {
                 Updated as students and agents post. Unverified listings are flagged, never hidden.
               </p>
             </div>
-            <Button variant="outline">View all listings</Button>
+            <Button variant="outline" asChild>
+              <Link to="/browse">View all listings</Link>
+            </Button>
           </div>
 
           <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {listings.map((l) => (
-              <article
-                key={l.title}
-                className="group overflow-hidden rounded-2xl border border-border bg-card shadow-card transition-shadow hover:shadow-lift"
-              >
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <img
-                    src={l.image}
-                    alt={l.title}
-                    loading="lazy"
-                    width={1024}
-                    height={768}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                  />
-                  <span className="absolute left-3 top-3 rounded-full bg-card/95 px-2.5 py-1 text-xs font-semibold text-foreground">
-                    {l.kind}
-                  </span>
-                  {l.verified ? (
-                    <span className="absolute right-3 top-3 flex items-center gap-1 rounded-full bg-primary px-2.5 py-1 text-xs font-semibold text-primary-foreground">
-                      <BadgeCheck className="h-3.5 w-3.5" /> Verified
-                    </span>
-                  ) : (
-                    <span className="absolute right-3 top-3 flex items-center gap-1 rounded-full bg-warning px-2.5 py-1 text-xs font-semibold text-warning-foreground">
-                      <ShieldAlert className="h-3.5 w-3.5" /> Unverified
-                    </span>
-                  )}
-                </div>
-                <div className="p-4">
-                  <h3 className="text-base font-semibold leading-snug">{l.title}</h3>
-                  <p className="mt-1.5 flex items-center gap-1 text-xs text-muted-foreground">
-                    <MapPin className="h-3.5 w-3.5" /> {l.school}
-                  </p>
-                  <div className="mt-3 flex flex-wrap gap-1.5">
-                    {l.amenities.map((a) => (
-                      <span
-                        key={a}
-                        className="rounded-md bg-muted px-2 py-1 text-[11px] font-medium text-muted-foreground"
-                      >
-                        {a}
-                      </span>
-                    ))}
-                  </div>
-                  <div className="mt-4 flex items-end justify-between border-t border-border pt-3">
-                    <p className="font-display text-lg font-bold text-primary">
-                      {l.price}
-                      <span className="ml-1 text-xs font-medium text-muted-foreground">
-                        {l.period}
-                      </span>
-                    </p>
-                    <Button variant="ghost" size="sm" className="text-primary">
-                      Inspect
-                    </Button>
-                  </div>
-                </div>
-              </article>
+              <ListingCard key={l.id} listing={l} />
             ))}
           </div>
         </section>
@@ -310,8 +201,12 @@ function Index() {
                 landlord exists. LodgeMate keeps the hustle, adds the safeguards.
               </p>
               <div className="mt-7 flex flex-wrap gap-3">
-                <Button>Browse verified lodges</Button>
-                <Button variant="outline">Post a bedspace</Button>
+                <Button asChild>
+                  <Link to="/browse">Browse verified lodges</Link>
+                </Button>
+                <Button variant="outline" asChild>
+                  <Link to="/list-a-space">Post a bedspace</Link>
+                </Button>
               </div>
             </div>
             <div className="grid gap-3">
@@ -337,7 +232,12 @@ function Index() {
 
         {/* Flow */}
         <section className="mx-auto max-w-6xl px-5 py-16">
-          <h2 className="text-2xl font-bold md:text-3xl">From search to keys</h2>
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <h2 className="text-2xl font-bold md:text-3xl">From search to keys</h2>
+            <Button variant="ghost" asChild>
+              <Link to="/how-it-works">How we verify →</Link>
+            </Button>
+          </div>
           <div className="mt-8 grid gap-5 md:grid-cols-4">
             {[
               { icon: Search, step: "01", t: "Filter", d: "School, area, price, room type." },
@@ -360,27 +260,7 @@ function Index() {
         </section>
       </main>
 
-      <footer className="border-t border-border bg-secondary/60">
-        <div className="mx-auto flex max-w-6xl flex-col gap-4 px-5 py-9 md:flex-row md:items-center md:justify-between">
-          <div className="flex items-center gap-2">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-canopy text-primary-foreground">
-              <MapPin className="h-3.5 w-3.5" />
-            </span>
-            <span className="font-display font-bold">LodgeMate</span>
-          </div>
-          <p className="text-sm text-muted-foreground">
-            Student housing for MOUAU & ABSU. Inspect before you pay.
-          </p>
-          <div className="flex items-center gap-4 text-sm text-muted-foreground">
-            <span className="flex items-center gap-1.5">
-              <Wifi className="h-4 w-4" /> Amenity data
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Bath className="h-4 w-4" /> Verified photos
-            </span>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
