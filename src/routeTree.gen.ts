@@ -14,6 +14,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BrowseRouteImport } from './routes/browse'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as ListASpaceRouteImport } from './routes/list-a-space'
+import { Route as SafetyRouteImport } from './routes/safety'
 import { Route as ListingsIdRouteImport } from './routes/listings.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -41,6 +42,11 @@ const ListASpaceRoute = ListASpaceRouteImport.update({
   path: '/list-a-space',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SafetyRoute = SafetyRouteImport.update({
+  id: '/safety',
+  path: '/safety',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ListingsIdRoute = ListingsIdRouteImport.update({
   id: '/listings/$id',
   path: '/listings/$id',
@@ -53,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/browse': typeof BrowseRoute
   '/how-it-works': typeof HowItWorksRoute
   '/list-a-space': typeof ListASpaceRoute
+  '/safety': typeof SafetyRoute
   '/listings/$id': typeof ListingsIdRoute
 }
 export interface FileRoutesByTo {
@@ -61,6 +68,7 @@ export interface FileRoutesByTo {
   '/browse': typeof BrowseRoute
   '/how-it-works': typeof HowItWorksRoute
   '/list-a-space': typeof ListASpaceRoute
+  '/safety': typeof SafetyRoute
   '/listings/$id': typeof ListingsIdRoute
 }
 export interface FileRoutesById {
@@ -70,6 +78,7 @@ export interface FileRoutesById {
   '/browse': typeof BrowseRoute
   '/how-it-works': typeof HowItWorksRoute
   '/list-a-space': typeof ListASpaceRoute
+  '/safety': typeof SafetyRoute
   '/listings/$id': typeof ListingsIdRoute
 }
 export interface FileRouteTypes {
@@ -80,6 +89,7 @@ export interface FileRouteTypes {
     | '/browse'
     | '/how-it-works'
     | '/list-a-space'
+    | '/safety'
     | '/listings/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -88,6 +98,7 @@ export interface FileRouteTypes {
     | '/browse'
     | '/how-it-works'
     | '/list-a-space'
+    | '/safety'
     | '/listings/$id'
   id:
     | '__root__'
@@ -96,6 +107,7 @@ export interface FileRouteTypes {
     | '/browse'
     | '/how-it-works'
     | '/list-a-space'
+    | '/safety'
     | '/listings/$id'
   fileRoutesById: FileRoutesById
 }
@@ -105,6 +117,7 @@ export interface RootRouteChildren {
   BrowseRoute: typeof BrowseRoute
   HowItWorksRoute: typeof HowItWorksRoute
   ListASpaceRoute: typeof ListASpaceRoute
+  SafetyRoute: typeof SafetyRoute
   ListingsIdRoute: typeof ListingsIdRoute
 }
 
@@ -145,6 +158,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ListASpaceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/safety': {
+      id: '/safety'
+      path: '/safety'
+      fullPath: '/safety'
+      preLoaderRoute: typeof SafetyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/listings/$id': {
       id: '/listings/$id'
       path: '/listings/$id'
@@ -161,6 +181,7 @@ const rootRouteChildren: RootRouteChildren = {
   BrowseRoute: BrowseRoute,
   HowItWorksRoute: HowItWorksRoute,
   ListASpaceRoute: ListASpaceRoute,
+  SafetyRoute: SafetyRoute,
   ListingsIdRoute: ListingsIdRoute,
 }
 export const routeTree = rootRouteImport
