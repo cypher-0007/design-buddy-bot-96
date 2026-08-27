@@ -24,6 +24,15 @@ export function SiteFooter() {
           <Link to="/list-a-space" className="hover:text-foreground">
             List a space
           </Link>
+          <Link to="/safety" className="hover:text-foreground">
+            Safety
+          </Link>
+          <Link to="/faq" className="hover:text-foreground">
+            FAQ
+          </Link>
+          <Link to="/contact" className="hover:text-foreground">
+            Contact
+          </Link>
           <Link to="/auth" className="hover:text-foreground">
             Sign in
           </Link>

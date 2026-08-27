@@ -12,8 +12,11 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BrowseRouteImport } from './routes/browse'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as FaqRouteImport } from './routes/faq'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as ListASpaceRouteImport } from './routes/list-a-space'
+import { Route as SafetyRouteImport } from './routes/safety'
 import { Route as ListingsIdRouteImport } from './routes/listings.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -31,6 +34,16 @@ const BrowseRoute = BrowseRouteImport.update({
   path: '/browse',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HowItWorksRoute = HowItWorksRouteImport.update({
   id: '/how-it-works',
   path: '/how-it-works',
@@ -39,6 +52,11 @@ const HowItWorksRoute = HowItWorksRouteImport.update({
 const ListASpaceRoute = ListASpaceRouteImport.update({
   id: '/list-a-space',
   path: '/list-a-space',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SafetyRoute = SafetyRouteImport.update({
+  id: '/safety',
+  path: '/safety',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ListingsIdRoute = ListingsIdRouteImport.update({
@@ -51,16 +69,22 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/browse': typeof BrowseRoute
+  '/contact': typeof ContactRoute
+  '/faq': typeof FaqRoute
   '/how-it-works': typeof HowItWorksRoute
   '/list-a-space': typeof ListASpaceRoute
+  '/safety': typeof SafetyRoute
   '/listings/$id': typeof ListingsIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/browse': typeof BrowseRoute
+  '/contact': typeof ContactRoute
+  '/faq': typeof FaqRoute
   '/how-it-works': typeof HowItWorksRoute
   '/list-a-space': typeof ListASpaceRoute
+  '/safety': typeof SafetyRoute
   '/listings/$id': typeof ListingsIdRoute
 }
 export interface FileRoutesById {
@@ -68,8 +92,11 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/browse': typeof BrowseRoute
+  '/contact': typeof ContactRoute
+  '/faq': typeof FaqRoute
   '/how-it-works': typeof HowItWorksRoute
   '/list-a-space': typeof ListASpaceRoute
+  '/safety': typeof SafetyRoute
   '/listings/$id': typeof ListingsIdRoute
 }
 export interface FileRouteTypes {
@@ -78,24 +105,33 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/browse'
+    | '/contact'
+    | '/faq'
     | '/how-it-works'
     | '/list-a-space'
+    | '/safety'
     | '/listings/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
     | '/browse'
+    | '/contact'
+    | '/faq'
     | '/how-it-works'
     | '/list-a-space'
+    | '/safety'
     | '/listings/$id'
   id:
     | '__root__'
     | '/'
     | '/auth'
     | '/browse'
+    | '/contact'
+    | '/faq'
     | '/how-it-works'
     | '/list-a-space'
+    | '/safety'
     | '/listings/$id'
   fileRoutesById: FileRoutesById
 }
@@ -103,8 +139,11 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
   BrowseRoute: typeof BrowseRoute
+  ContactRoute: typeof ContactRoute
+  FaqRoute: typeof FaqRoute
   HowItWorksRoute: typeof HowItWorksRoute
   ListASpaceRoute: typeof ListASpaceRoute
+  SafetyRoute: typeof SafetyRoute
   ListingsIdRoute: typeof ListingsIdRoute
 }
 
@@ -131,6 +170,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BrowseRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/how-it-works': {
       id: '/how-it-works'
       path: '/how-it-works'
@@ -143,6 +196,13 @@ declare module '@tanstack/react-router' {
       path: '/list-a-space'
       fullPath: '/list-a-space'
       preLoaderRoute: typeof ListASpaceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/safety': {
+      id: '/safety'
+      path: '/safety'
+      fullPath: '/safety'
+      preLoaderRoute: typeof SafetyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/listings/$id': {
@@ -159,8 +219,11 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
   BrowseRoute: BrowseRoute,
+  ContactRoute: ContactRoute,
+  FaqRoute: FaqRoute,
   HowItWorksRoute: HowItWorksRoute,
   ListASpaceRoute: ListASpaceRoute,
+  SafetyRoute: SafetyRoute,
   ListingsIdRoute: ListingsIdRoute,
 }
 export const routeTree = rootRouteImport
