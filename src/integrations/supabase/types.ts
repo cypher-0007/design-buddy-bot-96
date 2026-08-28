@@ -14,16 +14,203 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      inspections: {
+        Row: {
+          created_at: string
+          id: string
+          listing_id: string
+          note: string | null
+          preferred_date: string | null
+          status: string
+          student_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          listing_id: string
+          note?: string | null
+          preferred_date?: string | null
+          status?: string
+          student_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          listing_id?: string
+          note?: string | null
+          preferred_date?: string | null
+          status?: string
+          student_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inspections_listing_id_fkey"
+            columns: ["listing_id"]
+            isOneToOne: false
+            referencedRelation: "listings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      listings: {
+        Row: {
+          amenities: string[]
+          area: string
+          created_at: string
+          description: string
+          distance: string
+          id: string
+          image_url: string | null
+          kind: string
+          owner_id: string
+          period: string
+          price: number
+          school: string
+          status: Database["public"]["Enums"]["listing_status"]
+          title: string
+          updated_at: string
+          verified: boolean
+        }
+        Insert: {
+          amenities?: string[]
+          area?: string
+          created_at?: string
+          description?: string
+          distance?: string
+          id?: string
+          image_url?: string | null
+          kind?: string
+          owner_id: string
+          period?: string
+          price?: number
+          school?: string
+          status?: Database["public"]["Enums"]["listing_status"]
+          title: string
+          updated_at?: string
+          verified?: boolean
+        }
+        Update: {
+          amenities?: string[]
+          area?: string
+          created_at?: string
+          description?: string
+          distance?: string
+          id?: string
+          image_url?: string | null
+          kind?: string
+          owner_id?: string
+          period?: string
+          price?: number
+          school?: string
+          status?: Database["public"]["Enums"]["listing_status"]
+          title?: string
+          updated_at?: string
+          verified?: boolean
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          banned: boolean
+          created_at: string
+          full_name: string | null
+          id: string
+          phone: string | null
+          school: string | null
+          updated_at: string
+        }
+        Insert: {
+          banned?: boolean
+          created_at?: string
+          full_name?: string | null
+          id: string
+          phone?: string | null
+          school?: string | null
+          updated_at?: string
+        }
+        Update: {
+          banned?: boolean
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          school?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      reports: {
+        Row: {
+          created_at: string
+          id: string
+          listing_id: string | null
+          reason: string
+          reporter_id: string
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          listing_id?: string | null
+          reason: string
+          reporter_id: string
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          listing_id?: string | null
+          reason?: string
+          reporter_id?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reports_listing_id_fkey"
+            columns: ["listing_id"]
+            isOneToOne: false
+            referencedRelation: "listings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "student" | "landlord" | "admin"
+      listing_status: "pending" | "approved" | "rejected" | "removed"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +337,9 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["student", "landlord", "admin"],
+      listing_status: ["pending", "approved", "rejected", "removed"],
+    },
   },
 } as const
