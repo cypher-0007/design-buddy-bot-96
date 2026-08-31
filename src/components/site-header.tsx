@@ -31,14 +31,7 @@ export function SiteHeader() {
             </Link>
           ))}
         </nav>
-        <div className="flex items-center gap-2">
-          <Button variant="ghost" size="sm" asChild>
-            <Link to="/auth">Sign in</Link>
-          </Button>
-          <Button size="sm" asChild>
-            <Link to="/list-a-space">List a space</Link>
-          </Button>
-        </div>
+        <HeaderActions />>
       </div>
     </header>
   );
