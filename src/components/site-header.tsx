@@ -1,7 +1,9 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { MapPin } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
 
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/lib/auth-context";
 
 const nav = [
   { to: "/browse", label: "Browse" },
@@ -31,8 +33,55 @@ export function SiteHeader() {
             </Link>
           ))}
         </nav>
-        <HeaderActions />>
+        <HeaderActions />
       </div>
     </header>
+  );
+}
+
+function HeaderActions() {
+  const { user, isHost, isAdmin, signOut } = useAuth();
+  const navigate = useNavigate();
+  const qc = useQueryClient();
+
+  if (!user) {
+    return (
+      <div className="flex items-center gap-2">
+        <Button variant="ghost" size="sm" asChild>
+          <Link to="/auth">Sign in</Link>
+        </Button>
+        <Button size="sm" asChild>
+          <Link to="/auth">Get started</Link>
+        </Button>
+      </div>
+    );
+  }
+
+  const handleSignOut = async () => {
+    await qc.cancelQueries();
+    qc.clear();
+    await signOut();
+    navigate({ to: "/auth", replace: true });
+  };
+
+  return (
+    <div className="flex items-center gap-2">
+      {isAdmin && (
+        <Button variant="ghost" size="sm" asChild>
+          <Link to="/admin">Admin</Link>
+        </Button>
+      )}
+      {isHost && (
+        <Button variant="ghost" size="sm" asChild>
+          <Link to="/host">Host</Link>
+        </Button>
+      )}
+      <Button variant="ghost" size="sm" asChild>
+        <Link to="/dashboard">Dashboard</Link>
+      </Button>
+      <Button size="sm" variant="outline" onClick={handleSignOut}>
+        Sign out
+      </Button>
+    </div>
   );
 }
