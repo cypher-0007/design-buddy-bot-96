@@ -19,6 +19,7 @@ import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as ListASpaceRouteImport } from './routes/list-a-space'
 import { Route as SafetyRouteImport } from './routes/safety'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedHostRouteImport } from './routes/_authenticated/host'
 import { Route as ListingsIdRouteImport } from './routes/listings.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -70,6 +71,11 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedHostRoute = AuthenticatedHostRouteImport.update({
+  id: '/host',
+  path: '/host',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const ListingsIdRoute = ListingsIdRouteImport.update({
   id: '/listings/$id',
   path: '/listings/$id',
@@ -86,6 +92,7 @@ export interface FileRoutesByFullPath {
   '/list-a-space': typeof ListASpaceRoute
   '/safety': typeof SafetyRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/host': typeof AuthenticatedHostRoute
   '/listings/$id': typeof ListingsIdRoute
 }
 export interface FileRoutesByTo {
@@ -98,6 +105,7 @@ export interface FileRoutesByTo {
   '/list-a-space': typeof ListASpaceRoute
   '/safety': typeof SafetyRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/host': typeof AuthenticatedHostRoute
   '/listings/$id': typeof ListingsIdRoute
 }
 export interface FileRoutesById {
@@ -112,6 +120,7 @@ export interface FileRoutesById {
   '/list-a-space': typeof ListASpaceRoute
   '/safety': typeof SafetyRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/host': typeof AuthenticatedHostRoute
   '/listings/$id': typeof ListingsIdRoute
 }
 export interface FileRouteTypes {
@@ -126,6 +135,7 @@ export interface FileRouteTypes {
     | '/list-a-space'
     | '/safety'
     | '/dashboard'
+    | '/host'
     | '/listings/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -138,6 +148,7 @@ export interface FileRouteTypes {
     | '/list-a-space'
     | '/safety'
     | '/dashboard'
+    | '/host'
     | '/listings/$id'
   id:
     | '__root__'
@@ -151,6 +162,7 @@ export interface FileRouteTypes {
     | '/list-a-space'
     | '/safety'
     | '/_authenticated/dashboard'
+    | '/_authenticated/host'
     | '/listings/$id'
   fileRoutesById: FileRoutesById
 }
@@ -239,6 +251,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/host': {
+      id: '/_authenticated/host'
+      path: '/host'
+      fullPath: '/host'
+      preLoaderRoute: typeof AuthenticatedHostRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/listings/$id': {
       id: '/listings/$id'
       path: '/listings/$id'
@@ -251,10 +270,12 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedHostRoute: typeof AuthenticatedHostRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedHostRoute: AuthenticatedHostRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
