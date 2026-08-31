@@ -18,6 +18,7 @@ import { Route as FaqRouteImport } from './routes/faq'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as ListASpaceRouteImport } from './routes/list-a-space'
 import { Route as SafetyRouteImport } from './routes/safety'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedHostRouteImport } from './routes/_authenticated/host'
 import { Route as ListingsIdRouteImport } from './routes/listings.$id'
@@ -66,6 +67,11 @@ const SafetyRoute = SafetyRouteImport.update({
   path: '/safety',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -91,6 +97,7 @@ export interface FileRoutesByFullPath {
   '/how-it-works': typeof HowItWorksRoute
   '/list-a-space': typeof ListASpaceRoute
   '/safety': typeof SafetyRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/host': typeof AuthenticatedHostRoute
   '/listings/$id': typeof ListingsIdRoute
@@ -104,6 +111,7 @@ export interface FileRoutesByTo {
   '/how-it-works': typeof HowItWorksRoute
   '/list-a-space': typeof ListASpaceRoute
   '/safety': typeof SafetyRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/host': typeof AuthenticatedHostRoute
   '/listings/$id': typeof ListingsIdRoute
@@ -119,6 +127,7 @@ export interface FileRoutesById {
   '/how-it-works': typeof HowItWorksRoute
   '/list-a-space': typeof ListASpaceRoute
   '/safety': typeof SafetyRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/host': typeof AuthenticatedHostRoute
   '/listings/$id': typeof ListingsIdRoute
@@ -134,6 +143,7 @@ export interface FileRouteTypes {
     | '/how-it-works'
     | '/list-a-space'
     | '/safety'
+    | '/admin'
     | '/dashboard'
     | '/host'
     | '/listings/$id'
@@ -147,6 +157,7 @@ export interface FileRouteTypes {
     | '/how-it-works'
     | '/list-a-space'
     | '/safety'
+    | '/admin'
     | '/dashboard'
     | '/host'
     | '/listings/$id'
@@ -161,6 +172,7 @@ export interface FileRouteTypes {
     | '/how-it-works'
     | '/list-a-space'
     | '/safety'
+    | '/_authenticated/admin'
     | '/_authenticated/dashboard'
     | '/_authenticated/host'
     | '/listings/$id'
@@ -244,6 +256,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SafetyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -269,11 +288,13 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedHostRoute: typeof AuthenticatedHostRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedHostRoute: AuthenticatedHostRoute,
 }
